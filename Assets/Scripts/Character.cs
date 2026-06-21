@@ -1,37 +1,49 @@
 using UnityEngine;
 public class Character : MonoBehaviour
 {
-    [SerializeField] private GameObject _pauseMenuUI;
+    private Rigidbody _characterRigidbody;
+    [SerializeField] private GameObject _pauseMenu;
     private bool _isPaused = false;
+    Animator animator;
     private void Awake()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
+    private void Start()
+    {
+        _characterRigidbody = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (_isPaused)
-                Resume();
-            else
+            if (!_isPaused)
+            {
                 Pause();
+            }
+            else
+            {
+                Resume();
+            }   
         }
+        animator.SetFloat("Speed", _characterRigidbody.linearVelocity.magnitude);
     }
-    public void Pause()
+    private void Pause()
     {
-        _pauseMenuUI.SetActive(true);
-        Time.timeScale = 0.0f;
+        _pauseMenu.SetActive(true);
         _isPaused = true;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
-    public void Resume()
+    private void Resume()
     {
-        _pauseMenuUI.SetActive(false);
-        Time.timeScale = 1.0f;
+        _pauseMenu.SetActive(false);
         _isPaused = false;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 }
+
+

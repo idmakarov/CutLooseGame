@@ -2,9 +2,9 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
     [SerializeField] Camera _camera;
-    [SerializeField] float _speedAdj, _speedMax;
+    [SerializeField] private float _speedAdj, _speedMax;
     private Rigidbody _characterRigidbody;
-    void Awake()
+    private void Awake()
     {
         _characterRigidbody = GetComponent<Rigidbody>();
     }
@@ -17,11 +17,9 @@ public class CharacterMovement : MonoBehaviour
         _cameraForward.Normalize();
         _cameraRight.Normalize();
         Vector3 moveDirection = (_cameraForward * Input.GetAxis("Vertical") * Time.fixedDeltaTime + _cameraRight * Input.GetAxis("Horizontal") * Time.fixedDeltaTime).normalized;
-        //Ограничение скорости
         if (_characterRigidbody.linearVelocity.magnitude < _speedMax)
         {
             _characterRigidbody.AddForce(moveDirection * _speedAdj * Time.fixedDeltaTime, ForceMode.Force);
-            _characterRigidbody.transform.eulerAngles = new Vector3(0.0f, _camera.transform.eulerAngles.y, _camera.transform.eulerAngles.z);
         }
     }
 }
