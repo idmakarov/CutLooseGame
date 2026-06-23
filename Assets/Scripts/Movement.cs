@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 public class Movement : MonoBehaviour
 {
@@ -27,10 +28,15 @@ public class Movement : MonoBehaviour
         _cameraRightVector.Normalize();
         _directionMoveAction = _moveAction.ReadValue<Vector2>();
         _directionMove = (_cameraForwardVector * _directionMoveAction.y + _cameraRightVector * _directionMoveAction.x).normalized;
-        if (_characterRigidbody.linearVelocity.magnitude < _speedMax)
+        _directionMove = Vector3.ClampMagnitude(_directionMove, _speedMax);
+        _characterRigidbody.AddForce(_directionMove * _speedAdj * Time.fixedDeltaTime, ForceMode.Force);
+        if (_moveAction.IsPressed())
         {
-            _characterRigidbody.AddForce(_directionMove * _speedAdj * Time.fixedDeltaTime, ForceMode.Force);
-            _animatorCharacter.SetFloat("Speed", _characterRigidbody.linearVelocity.magnitude);
+            _animatorCharacter.SetFloat("Speed", _characterRigidbody.linearVelocity.magnitude, 0.2f, Time.fixedDeltaTime);
+        }
+        else
+        {
+            _animatorCharacter.SetFloat("Speed", 0.0f);
         }
     }
 }
