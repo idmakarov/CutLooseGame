@@ -1,16 +1,24 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject _pauseMenu;
+    private PlayerInput _playerInput;
+    private InputAction _gameplayAction;
     private bool _isPaused = false;
     private void Awake()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
+    private void Start()
+    {
+        _playerInput = GetComponent<PlayerInput>();
+        _gameplayAction = _playerInput.actions.FindAction("Pause");
+    }
     private void Update()
     {
-        /*if (Input.GetKeyDown(KeyCode.Escape))
+        if(_gameplayAction.WasPressedThisFrame())
         {
             if (!_isPaused)
             {
@@ -20,13 +28,13 @@ public class PauseMenu : MonoBehaviour
             {
                 Resume();
             }   
-        }*/
+        }
     }
-
     private void Pause()
     {
         _pauseMenu.SetActive(true);
         _isPaused = true;
+        Time.timeScale = 0.0f;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
@@ -34,6 +42,7 @@ public class PauseMenu : MonoBehaviour
     {
         _pauseMenu.SetActive(false);
         _isPaused = false;
+        Time.timeScale = 1.0f;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }

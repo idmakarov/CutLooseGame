@@ -7,19 +7,38 @@ public class Movement : MonoBehaviour
     [SerializeField] private float _speedAdj, _speedMax;
     private Rigidbody _characterRigidbody;
     private PlayerInput _playerInput;
-    private InputAction _moveAction;
+    private InputAction _moveAction, _jumpAction;
     private Animator _animatorCharacter;
     private Vector2 _directionMoveAction;
     private Vector3 _cameraForwardVector, _cameraRightVector, _directionMove;
+    private bool _isGrounded = true;
     private void Start()
     {
         _playerInput = GetComponent<PlayerInput>();
         _animatorCharacter = GetComponent<Animator>();
         _characterRigidbody = GetComponent<Rigidbody>();
         _moveAction = _playerInput.actions.FindAction("Move");
+        _jumpAction = _playerInput.actions.FindAction("Jump");
+    }
+    void OnCollisionEnter(Collision collision)
+    {
+        IsGroundedUpate(collision, true);
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+        IsGroundedUpate(collision, false);
+    }
+    private void IsGroundedUpate(Collision collision, bool value)
+    {
+        if (collision.gameObject.tag == ("Ground"))
+        {
+            _isGrounded = value;
+        }
     }
     private void FixedUpdate()
     {
+        _animatorCharacter.SetBool("Jump", false);
         _cameraForwardVector = _camera.transform.forward;
         _cameraForwardVector.y = 0.0f;
         _cameraForwardVector.Normalize();
@@ -37,6 +56,15 @@ public class Movement : MonoBehaviour
         else
         {
             _animatorCharacter.SetFloat("Speed", 0.0f);
+        }
+
+        if (_jumpAction.IsPressed() && _isGrounded)
+        {
+            {
+                Debug.Log("Я ГЕЙ");
+                //_characterRigidbody.AddForce(Vector3.up * _speedAdj * 10.0f * Time.fixedDeltaTime, ForceMode.Force);
+                _animatorCharacter.SetBool("Jump", true);
+            }
         }
     }
 }

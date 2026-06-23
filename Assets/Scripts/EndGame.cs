@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 public class EndGame : MonoBehaviour
 {
-    [SerializeField] private GameObject _endMenu;
+    /*[SerializeField] private GameObject _endMenu;
     [SerializeField] private TextMeshProUGUI messageText;
     private bool isPlayerInside = false;
     private void OnTriggerEnter(Collider other)
@@ -42,5 +42,5 @@ public class EndGame : MonoBehaviour
     public void ShowMessage(string text)
     {
         messageText.text = text;
-    }
+    }*/
 }
