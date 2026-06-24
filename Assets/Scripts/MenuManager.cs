@@ -6,6 +6,10 @@ public class MenuManager : MonoBehaviour
     {
         SceneManager.LoadScene("Game");
     }
+    public void StartGrayBox()
+    {
+        SceneManager.LoadScene("GrayBox");
+    }
     public void RestartGame()
     {
         SceneManager.LoadScene("Game");

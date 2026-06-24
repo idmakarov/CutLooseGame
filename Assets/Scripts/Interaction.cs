@@ -5,11 +5,10 @@ public class Interaction : MonoBehaviour
 {
     [SerializeField] private AudioSource _audioSource;
     private bool isPlayerInside = false;
-    private PlayerInput _playerInput;
+    [SerializeField] private PlayerInput _playerInput;
     private InputAction _interactionAction;
     private void Start()
     {
-        _playerInput = GetComponent<PlayerInput>(); 
         _interactionAction = _playerInput.actions.FindAction("Use");
     }
     private void OnTriggerEnter(Collider other)
