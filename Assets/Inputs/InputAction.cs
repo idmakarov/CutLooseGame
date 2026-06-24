@@ -213,7 +213,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""c5051b73-deeb-4e1c-ab94-131a642777d6"",
+                    ""id"": ""9eac094c-04c8-4222-943e-9b8e9433e2ec"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": ""Press"",
                     ""processors"": """",

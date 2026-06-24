@@ -4,14 +4,18 @@ using UnityEngine.InputSystem;
 public class Movement : MonoBehaviour
 {
     [SerializeField] private Camera _camera;
-    [SerializeField] private float _speedAdj, _speedMax;
+    [SerializeField] private float _moveSpeedAdj, _moveSpeedMax;
+    [SerializeField] private float _jumpSpeedAdj;
+    [SerializeField] private LayerMask _groundLayerMask;
+    [SerializeField] private float _groundCheckOffset = 0.1f;
+    [SerializeField] private float _groundCheckRadius = 0.2f;
     private Rigidbody _characterRigidbody;
     private PlayerInput _playerInput;
     private InputAction _moveAction, _jumpAction;
     private Animator _animatorCharacter;
     private Vector2 _directionMoveAction;
     private Vector3 _cameraForwardVector, _cameraRightVector, _directionMove;
-    private bool _isGrounded = true;
+    private bool _isGrounded, _isPressedSpace;
     private void Start()
     {
         _playerInput = GetComponent<PlayerInput>();
@@ -20,25 +24,25 @@ public class Movement : MonoBehaviour
         _moveAction = _playerInput.actions.FindAction("Move");
         _jumpAction = _playerInput.actions.FindAction("Jump");
     }
-    void OnCollisionEnter(Collision collision)
+    private bool IsGrounded()
     {
-        IsGroundedUpate(collision, true);
+        Vector3 sphereCenter = transform.position + Vector3.down * _groundCheckOffset;
+        return Physics.CheckSphere(sphereCenter, _groundCheckRadius, _groundLayerMask);
     }
-
-    void OnCollisionExit(Collision collision)
+    private void Update()
     {
-        IsGroundedUpate(collision, false);
-    }
-    private void IsGroundedUpate(Collision collision, bool value)
-    {
-        if (collision.gameObject.tag == ("Ground"))
+        if(_jumpAction.WasPressedThisFrame())
         {
-            _isGrounded = value;
+            _isPressedSpace = true;
         }
     }
     private void FixedUpdate()
     {
-        _animatorCharacter.SetBool("Jump", false);
+        _isGrounded = IsGrounded();
+        //if (_isGrounded)
+        //{
+        //    _animatorCharacter.SetBool("Jump", false);
+        //}
         _cameraForwardVector = _camera.transform.forward;
         _cameraForwardVector.y = 0.0f;
         _cameraForwardVector.Normalize();
@@ -47,8 +51,8 @@ public class Movement : MonoBehaviour
         _cameraRightVector.Normalize();
         _directionMoveAction = _moveAction.ReadValue<Vector2>();
         _directionMove = (_cameraForwardVector * _directionMoveAction.y + _cameraRightVector * _directionMoveAction.x).normalized;
-        _directionMove = Vector3.ClampMagnitude(_directionMove, _speedMax);
-        _characterRigidbody.AddForce(_directionMove * _speedAdj * Time.fixedDeltaTime, ForceMode.Force);
+        _characterRigidbody.AddForce(_directionMove * _moveSpeedAdj * Time.fixedDeltaTime, ForceMode.Force);
+        _characterRigidbody.linearVelocity = Vector3.ClampMagnitude(_characterRigidbody.linearVelocity, _moveSpeedMax);
         if (_moveAction.IsPressed())
         {
             _animatorCharacter.SetFloat("Speed", _characterRigidbody.linearVelocity.magnitude, 0.2f, Time.fixedDeltaTime);
@@ -57,14 +61,15 @@ public class Movement : MonoBehaviour
         {
             _animatorCharacter.SetFloat("Speed", 0.0f);
         }
-
-        if (_jumpAction.IsPressed() && _isGrounded)
+        if (_isPressedSpace && _isGrounded)
         {
             {
-                Debug.Log("Я ГЕЙ");
-                //_characterRigidbody.AddForce(Vector3.up * _speedAdj * 10.0f * Time.fixedDeltaTime, ForceMode.Force);
-                _animatorCharacter.SetBool("Jump", true);
+                _characterRigidbody.AddForce(Vector3.up * _jumpSpeedAdj, ForceMode.Impulse);
+                _animatorCharacter.SetTrigger("Jump");
+                //_animatorCharacter.SetBool("Jump", true);
             }
+            _isPressedSpace = false;
         }
+        _animatorCharacter.SetBool("IsGrounded", _isGrounded);
     }
 }
