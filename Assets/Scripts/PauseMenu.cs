@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject _pauseMenu;
-    [SerializeField] private PlayerInput _playerInput;
+    private PlayerInput _playerInput;
     private InputAction _gameplayAction;
     private bool _isPaused = false;
     private void Awake()
@@ -13,6 +13,7 @@ public class PauseMenu : MonoBehaviour
     }
     private void Start()
     {
+        _playerInput = GetComponent<PlayerInput>();
         _gameplayAction = _playerInput.actions.FindAction("Pause");
     }
     private void Update()
