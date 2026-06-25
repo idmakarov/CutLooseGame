@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Interaction
+  - Button
   layers:
   - Default
   - TransparentFX
