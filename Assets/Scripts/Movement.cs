@@ -6,6 +6,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private AudioClip _landedSound;
     [SerializeField] private AudioClip _jumpSound;
     [SerializeField] private Camera _camera;
+    [SerializeField] private PlayerInput _playerInput;
     [SerializeField] private float _moveSpeedAdj, _moveSpeedMax;
     [SerializeField] private float _jumpSpeedAdj;
     [SerializeField] private LayerMask _groundLayerMask;
@@ -13,7 +14,6 @@ public class Movement : MonoBehaviour
     [SerializeField] private float _groundCheckRadius = 0.2f;
     private AudioSource _audioSourceCharacter;
     private Rigidbody _characterRigidbody;
-    private PlayerInput _playerInput;
     private InputAction _moveAction, _jumpAction;
     private Animator _animatorCharacter;
     private Vector2 _directionMoveAction;
@@ -26,7 +26,6 @@ public class Movement : MonoBehaviour
         {
             _camera = Camera.main;
         }
-        _playerInput = GetComponent<PlayerInput>();
         _animatorCharacter = GetComponent<Animator>();
         _characterRigidbody = GetComponent<Rigidbody>();
         _audioSourceCharacter = GetComponent<AudioSource>();
@@ -95,7 +94,6 @@ public class Movement : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        Debug.Log(_characterRigidbody.linearVelocity.y);
         _isGrounded = IsGrounded();
         MoveCharacter();
         JumpCharacter();
