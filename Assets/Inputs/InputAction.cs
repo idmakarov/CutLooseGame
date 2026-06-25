@@ -234,7 +234,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""id"": ""2a260d05-ddfe-4984-9e09-719e62ebe8e5"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -252,7 +252,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""40dc3b61-ea9b-429a-a866-13c6fca89389"",
                     ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Pause"",
