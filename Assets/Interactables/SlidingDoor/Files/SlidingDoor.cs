@@ -143,10 +143,12 @@ public class SlidingDoor : MonoBehaviour
         Gizmos.DrawWireSphere(openedWorldPos, 0.05f);
 
         // Draw labels in scene view
+#if UNITY_EDITOR
         UnityEditor.Handles.BeginGUI();
         UnityEditor.Handles.Label(closedWorldPos + Vector3.up * 0.1f, "Closed");
         UnityEditor.Handles.Label(openedWorldPos + Vector3.up * 0.1f, "Open");
         UnityEditor.Handles.EndGUI();
+#endif
     }
 
     void DrawDoorGizmo(Vector3 position, Vector3 size)
