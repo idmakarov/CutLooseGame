@@ -54,7 +54,8 @@ public class Lever : MonoBehaviour
     {
         if (_isPlayerInside && _inputAction.WasPressedThisFrame())
         {
-            SwitchLever();
+            Debug.Log("123");
+            RotateLever();
         }
     }
 }
