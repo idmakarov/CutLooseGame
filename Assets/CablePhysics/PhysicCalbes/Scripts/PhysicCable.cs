@@ -272,6 +272,48 @@ namespace HPhysic
             }
         }
 
+        [ContextMenu("Reset points position")]
+        public void ResetPointsPosition()
+        {
+            if (!start || !end || !point0)
+            {
+                Debug.LogWarning("Can't reset positions because start, end or point0 is null!");
+                return;
+            }
+        
+            if (numberOfPoints < 1)
+            {
+                Debug.LogWarning("No points to reset!");
+                return;
+            }
+        
+            // Calculate the direction and total distance between start and end
+            Vector3 startPos = start.transform.position;
+            Vector3 endPos = end.transform.position;
+            Vector3 direction = (endPos - startPos).normalized;
+            
+            // Calculate spacing between points
+            float totalDistance = Vector3.Distance(startPos, endPos);
+            float pointSpacing = totalDistance / (numberOfPoints + 1);
+        
+            // Reposition all points in a straight line
+            for (int i = 0; i < numberOfPoints; i++)
+            {
+                Transform point = GetPoint(i);
+                if (point != null)
+                {
+                    Vector3 newPosition = startPos + direction * (pointSpacing * (i + 1));
+                    point.position = newPosition;
+                }
+                else
+                {
+                    Debug.LogWarning($"Point {i} not found during reset!");
+                }
+            }
+        
+            Debug.Log("Points positions have been reset in a straight line.");
+        }
+
         private Vector3 CountConPos(Vector3 start, Vector3 end) => (start + end) / 2f;
         private Vector3 CountSizeOfCon(Vector3 start, Vector3 end) => new Vector3(size, size, (start - end).magnitude / 2f);
         private Quaternion CountRoationOfCon(Vector3 start, Vector3 end) => Quaternion.LookRotation(end - start, Vector3.right);

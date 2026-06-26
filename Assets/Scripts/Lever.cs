@@ -14,15 +14,26 @@ public class Lever : MonoBehaviour
     [SerializeField] AudioSource _audioSource;
     [SerializeField] AudioClip _audioClip;
     [SerializeField] Renderer _lightRenderer;
-    [SerializeField] private LeverManager _leverManager;
-    [SerializeField] private TextMeshProUGUI _useBox;
+    private LeverManager _leverManager;
+    private TextMeshProUGUI _useBox;
     private bool _isPlayerInside = false;
     private bool _isTurn = false;
     private InputAction _inputAction;
+
     private void Start()
     {
+        if (_input == null)
+        {
+            Debug.LogWarning("You should assign PlayerInput! Using .Find() for now.");
+            _input = GameObject.Find("PlayerInput").GetComponent<PlayerInput>();
+        }
+
         _inputAction = _input.actions.FindAction("Use");
+
+        _useBox = CanvasHolder.Instance.useETip;
+        _leverManager = LeverManager.Instance;
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
