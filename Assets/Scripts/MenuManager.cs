@@ -5,13 +5,20 @@ public class MenuManager : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene("Game");
-        Debug.Log("Start Game");
+    }
+    public void StartGrayBox()
+    {
+        SceneManager.LoadScene("GrayBox");
+    }
+    public void RestartGame()
+    {
+        SceneManager.LoadScene("Game");
     }
     public void Settings()
     {
         Debug.Log("Settings Menu");
     }
-    public void QuitGame()
+    public void ExitGame()
     {
         Application.Quit();
     }
