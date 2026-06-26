@@ -21,6 +21,12 @@ public class ButtonPhysical : MonoBehaviour
 
     void Start()
     {
+        if (playerInput == null)
+        {
+            Debug.LogWarning("You should assign PlayerInput! Using .Find() for now.");
+            playerInput = GameObject.Find("PlayerInput").GetComponent<PlayerInput>();
+        }
+
         normalColor = buttonBodyRenderer.material.color;
         inputAction = playerInput.actions.FindAction("Use");
     }

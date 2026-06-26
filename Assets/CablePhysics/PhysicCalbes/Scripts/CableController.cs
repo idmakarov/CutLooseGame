@@ -18,8 +18,14 @@ public class CableController : MonoBehaviour
 
     private void Start()
     {
-        physicCable.transform.SetParent(null);
-        
+        physicCable.transform.SetParent(null, true);
+
+        if (_playerInput == null)
+        {
+            Debug.LogWarning("You should assign PlayerInput! Using .Find() for now.");
+            _playerInput = GameObject.Find("PlayerInput").GetComponent<PlayerInput>();
+        }
+
         _extendAction = _playerInput.actions.FindAction("CableExtend");
         _retractAction = _playerInput.actions.FindAction("CableRetract");
         _connectAction = _playerInput.actions.FindAction("CableConnect");
