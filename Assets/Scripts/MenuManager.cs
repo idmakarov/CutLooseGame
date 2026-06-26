@@ -1,3 +1,4 @@
+using System.Security;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class MenuManager : MonoBehaviour
@@ -17,6 +18,14 @@ public class MenuManager : MonoBehaviour
     public void Settings()
     {
         Debug.Log("Settings Menu");
+    }
+    public void ReturnToMainMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+    public void Credits()
+    {
+        SceneManager.LoadScene("Credits");
     }
     public void ExitGame()
     {
