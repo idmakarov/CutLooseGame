@@ -18,6 +18,8 @@ public class CableController : MonoBehaviour
 
     private void Start()
     {
+        physicCable.transform.SetParent(null);
+        
         _extendAction = _playerInput.actions.FindAction("CableExtend");
         _retractAction = _playerInput.actions.FindAction("CableRetract");
         _connectAction = _playerInput.actions.FindAction("CableConnect");
