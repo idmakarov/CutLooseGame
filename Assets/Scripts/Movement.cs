@@ -73,7 +73,7 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
-        if (_jumpAction.WasPressedThisFrame())
+        if (_jumpAction.WasPressedThisFrame() && !Dialog.Instance.DialogInProgress)
         {
             _allowedJumping = true;
         }

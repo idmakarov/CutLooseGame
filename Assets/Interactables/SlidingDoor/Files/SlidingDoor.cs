@@ -113,6 +113,7 @@ public class SlidingDoor : MonoBehaviour
                 break;
         }
 
+#if UNITY_EDITOR
         // Convert local positions to world space for drawing
         Vector3 closedWorldPos = transform.TransformPoint(closedPos);
         Vector3 openedWorldPos = transform.TransformPoint(openedPos);
@@ -153,6 +154,7 @@ public class SlidingDoor : MonoBehaviour
         UnityEditor.Handles.Label(closedWorldPos + Vector3.up * 0.1f, "Closed");
         UnityEditor.Handles.Label(openedWorldPos + Vector3.up * 0.1f, "Open");
         UnityEditor.Handles.EndGUI();
+#endif
     }
 
     void DrawDoorGizmo(Vector3 position, Vector3 size)

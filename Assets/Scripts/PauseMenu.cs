@@ -6,15 +6,18 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private PlayerInput _playerInput;
     private InputAction _gameplayAction;
     private bool _isPaused = false;
+    
     private void Awake()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
+
     private void Start()
     {
         _gameplayAction = _playerInput.actions.FindAction("Pause");
     }
+
     private void Update()
     {
         if(_gameplayAction.WasPressedThisFrame())
@@ -29,7 +32,8 @@ public class PauseMenu : MonoBehaviour
             }   
         }
     }
-    private void Pause()
+
+    public void Pause()
     {
         _pauseMenu.SetActive(true);
         _isPaused = true;
@@ -37,7 +41,8 @@ public class PauseMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
-    private void Resume()
+
+    public void Resume()
     {
         _pauseMenu.SetActive(false);
         _isPaused = false;

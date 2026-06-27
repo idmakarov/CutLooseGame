@@ -74,4 +74,15 @@ public class CableController : MonoBehaviour
             physicCable.ResetPointsPosition();
         }
     }
+
+    public void DisconnectAll()
+    {
+        forcedConnectMain.ForceDisconnectCables();
+        forcedConnectOptional.ForceDisconnectCables();
+    }
+    
+    public void DisconnectOptional()
+    {
+        forcedConnectOptional.ForceDisconnectCables();
+    }
 }
