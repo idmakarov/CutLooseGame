@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e41ce4f68620bc144b73b8e9936ab807
+guid: 8a0f8ad6fa3b7fc429a4d2584fbf5f9e
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -136,23 +136,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Tight_Team_Logo_0
+      name: MainMenu_0
       rect:
         serializedVersion: 2
-        x: 732
-        y: 79
-        width: 1076
-        height: 1311
+        x: 0
+        y: 0
+        width: 1920
+        height: 1080
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b27131c4785b9754b93e07bed10c3aa7
-      internalID: 475297002
+      spriteID: 1af1cdc40a7fd134eab85e1a7dd89d00
+      internalID: -180992884
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 81870c6b3a4ec3548839326962c52478
+    spriteID: 90d488b262c6c68478ab2c79de669b52
     internalID: 0
     vertices: []
     indices: 
@@ -171,7 +171,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Tight_Team_Logo_0: 475297002
+      MainMenu_0: -180992884
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
