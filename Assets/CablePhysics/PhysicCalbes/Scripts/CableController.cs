@@ -6,9 +6,9 @@ public class CableController : MonoBehaviour
 {
     [SerializeField] private PlayerInput _playerInput;
     private InputAction _extendAction, _retractAction, _connectAction, _resetAction;
-    [SerializeField] int minSegmentCount, maxSegmentCount;
+    public int minSegmentCount, maxSegmentCount;
 
-    [SerializeField] PhysicCable physicCable;
+    public PhysicCable physicCable;
     [SerializeField] ForcedConnect forcedConnectMain;
     [SerializeField] ForcedConnect forcedConnectOptional;
 
@@ -84,5 +84,10 @@ public class CableController : MonoBehaviour
     public void DisconnectOptional()
     {
         forcedConnectOptional.ForceDisconnectCables();
+    }
+
+    public void ResetPoints()
+    {
+        physicCable.ResetPointsPosition();
     }
 }

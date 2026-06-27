@@ -67,10 +67,22 @@ public class RoomScissorsManager : MonoBehaviour
         
         cutsceneSequence.AppendCallback(() => 
         {
+            cableController.ResetPoints();
             cutsceneCableForcedConnect.ForceConnectCables();
         });
+
+        cutsceneSequence.AppendInterval(1f);
+
+        cutsceneSequence.AppendCallback(() => 
+        {
+            int extraPointCount = cableController.physicCable.points.Count - cableController.minSegmentCount;
+            for (int i = 0; i < extraPointCount; i++)
+            {
+                cableController.physicCable.RemovePoint();
+            }
+        });
         
-        cutsceneSequence.AppendInterval(1f); // Wait 0.2 seconds
+        cutsceneSequence.AppendInterval(1f);
         
         cutsceneSequence.AppendCallback(() => 
         {

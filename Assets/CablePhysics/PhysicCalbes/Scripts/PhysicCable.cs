@@ -291,12 +291,20 @@ namespace HPhysic
             Vector3 startPos = start.transform.position;
             Vector3 endPos = end.transform.position;
             Vector3 direction = (endPos - startPos).normalized;
-            
+        
             // Calculate spacing between points
             float totalDistance = Vector3.Distance(startPos, endPos);
             float pointSpacing = totalDistance / (numberOfPoints + 1);
         
-            // Reposition all points in a straight line
+            // Stop the start rigidbody
+            Rigidbody startRb = start.GetComponent<Rigidbody>();
+            if (startRb != null)
+            {
+                startRb.linearVelocity = Vector3.zero;
+                startRb.angularVelocity = Vector3.zero;
+            }
+        
+            // Reposition all points and stop their movement
             for (int i = 0; i < numberOfPoints; i++)
             {
                 Transform point = GetPoint(i);
@@ -304,6 +312,13 @@ namespace HPhysic
                 {
                     Vector3 newPosition = startPos + direction * (pointSpacing * (i + 1));
                     point.position = newPosition;
+        
+                    Rigidbody rb = point.GetComponent<Rigidbody>();
+                    if (rb != null)
+                    {
+                        rb.linearVelocity = Vector3.zero;
+                        rb.angularVelocity = Vector3.zero;
+                    }
                 }
                 else
                 {
@@ -311,7 +326,15 @@ namespace HPhysic
                 }
             }
         
-            Debug.Log("Points positions have been reset in a straight line.");
+            // Stop the end rigidbody
+            Rigidbody endRb = end.GetComponent<Rigidbody>();
+            if (endRb != null)
+            {
+                endRb.linearVelocity = Vector3.zero;
+                endRb.angularVelocity = Vector3.zero;
+            }
+        
+            Debug.Log("Points positions have been reset in a straight line and all cable rigidbodies have been stopped.");
         }
 
         private Vector3 CountConPos(Vector3 start, Vector3 end) => (start + end) / 2f;

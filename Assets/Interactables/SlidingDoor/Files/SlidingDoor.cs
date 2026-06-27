@@ -16,6 +16,11 @@ public class SlidingDoor : MonoBehaviour
     [SerializeField] Ease openEase = Ease.OutBack;
     [SerializeField] Ease closeEase = Ease.InBack;
 
+    [Header("Audio")]
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip openClip;
+    [SerializeField] AudioClip closeClip;
+
     Vector3 normalLocalPosition;
     Vector3 openLocalPosition;
 
@@ -67,6 +72,9 @@ public class SlidingDoor : MonoBehaviour
     public void Open()
     {
         if (open) return;
+
+        audioSource.clip = openClip;
+        audioSource.Play();
         
         doorRenderer.transform.DOKill();
         doorRenderer.transform.DOLocalMove(openLocalPosition, animationDuration)
@@ -78,6 +86,9 @@ public class SlidingDoor : MonoBehaviour
     {
         if (!open) return;
         
+        audioSource.clip = closeClip;
+        audioSource.Play();
+
         doorRenderer.transform.DOKill();
         doorRenderer.transform.DOLocalMove(normalLocalPosition, animationDuration)
             .SetEase(closeEase);
