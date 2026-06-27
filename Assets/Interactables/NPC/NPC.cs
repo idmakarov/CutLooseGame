@@ -9,6 +9,7 @@ public class NPC : MonoBehaviour
     private InputAction inputAction;
 
     [SerializeField] List<string> phrases;
+    [SerializeField] bool showTutorial;
     
 
     void Start()
@@ -46,7 +47,7 @@ public class NPC : MonoBehaviour
     {
         if (isPlayerInside && inputAction.WasPressedThisFrame() && !Dialog.Instance.DialogInProgress)
         {
-            Dialog.Instance.Open(phrases);
+            Dialog.Instance.Open(phrases, showTutorial);
         }
     }
 }
