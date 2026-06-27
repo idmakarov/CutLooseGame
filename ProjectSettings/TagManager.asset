@@ -8,6 +8,7 @@ TagManager:
   - Interaction
   - Button
   - MovableBox
+  - MainMenuMusic
   layers:
   - Default
   - TransparentFX

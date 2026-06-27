@@ -16,6 +16,7 @@ public class PressurePlate : MonoBehaviour
 
     public UnityEvent<bool> OnStateChanged;
 
+
     void Start()
     {
         normalLocalY = plateRenderer.transform.localPosition.y;
@@ -24,7 +25,7 @@ public class PressurePlate : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(boxTag) && !pressed)
+        if ((other.CompareTag(boxTag) || other.CompareTag("Player")) && !pressed)
         {
             pressed = true;
             AnimatePress();
@@ -34,7 +35,7 @@ public class PressurePlate : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag(boxTag) && pressed)
+        if ((other.CompareTag(boxTag) || other.CompareTag("Player")) && pressed)
         {
             pressed = false;
             AnimateRelease();

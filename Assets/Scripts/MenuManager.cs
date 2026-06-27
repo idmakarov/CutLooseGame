@@ -30,6 +30,9 @@ public class MenuManager : MonoBehaviour
     }
     public void ReturnToMainMenu()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
         if (LoadingFade.Instance != null)
             LoadingFade.Instance.LoadLevelFaded("Menu");
         else
@@ -37,6 +40,9 @@ public class MenuManager : MonoBehaviour
     }
     public void Credits()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        
         if (LoadingFade.Instance != null)
             LoadingFade.Instance.LoadLevelFaded("Credits");
         else
