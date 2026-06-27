@@ -15,4 +15,5 @@ public class CanvasHolder : MonoBehaviour
     }
     
     public TextMeshProUGUI useETip;
+    public TextMeshProUGUI talkTip;
 }
