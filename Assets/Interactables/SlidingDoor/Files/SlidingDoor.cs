@@ -30,6 +30,12 @@ public class SlidingDoor : MonoBehaviour
     {
         normalLocalPosition = doorRenderer.transform.localPosition;
         CalculateOpenPosition();
+
+        if (open)
+        {
+            open = false;
+            Open();
+        }
     }
 
     void CalculateOpenPosition()

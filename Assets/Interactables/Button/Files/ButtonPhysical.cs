@@ -5,11 +5,15 @@ using UnityEngine.InputSystem;
 
 public class ButtonPhysical : MonoBehaviour
 {
+    public bool interactable = true;
+
     [SerializeField] Renderer buttonBodyRenderer;
     [SerializeField] Color pressedColor;
+    [SerializeField] Color disabledColor;
     Color normalColor;
 
-    [SerializeField] float pushDistance;
+    [SerializeField] float pressedLocalY;
+    float normalLocalY;
     [SerializeField] float animationDuration = 0.5f;
 
     private bool isPlayerInside;
@@ -18,6 +22,7 @@ public class ButtonPhysical : MonoBehaviour
     private InputAction inputAction;
 
     public UnityEvent OnClick;
+    
 
     void Start()
     {
@@ -27,8 +32,37 @@ public class ButtonPhysical : MonoBehaviour
             playerInput = GameObject.Find("PlayerInput").GetComponent<PlayerInput>();
         }
 
-        normalColor = buttonBodyRenderer.material.color;
+        normalLocalY = buttonBodyRenderer.transform.localPosition.y;
+        normalColor = buttonBodyRenderer.sharedMaterial.color;
         inputAction = playerInput.actions.FindAction("Use");
+        
+        // Apply initial interactable state
+        UpdateInteractableVisual();
+    }
+
+    // Method to change interactable state
+    public void SetInteractable(bool value)
+    {
+        if (interactable != value)
+        {
+            interactable = value;
+            UpdateInteractableVisual();
+        }
+    }
+
+    // Update the visual based on current interactable state
+    private void UpdateInteractableVisual()
+    {
+        if (interactable)
+        {
+            // Transition to normal color (from disabled or current state)
+            buttonBodyRenderer.material.DOColor(normalColor, animationDuration);
+        }
+        else
+        {
+            // Transition to disabled color
+            buttonBodyRenderer.material.DOColor(disabledColor, animationDuration);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -37,6 +71,7 @@ public class ButtonPhysical : MonoBehaviour
         {
             isPlayerInside = true;
             Debug.Log("Игрок вошел в зону!");
+            CanvasHolder.Instance.useETip.gameObject.SetActive(true);
         }
     }
     
@@ -46,6 +81,7 @@ public class ButtonPhysical : MonoBehaviour
         {
             isPlayerInside = false;
             Debug.Log("Игрок вышел из зоны!");
+            CanvasHolder.Instance.useETip.gameObject.SetActive(false);
         }
     }
 
@@ -53,7 +89,15 @@ public class ButtonPhysical : MonoBehaviour
     {
         if (isPlayerInside && inputAction.WasPressedThisFrame())
         {
-            PressButton();
+            if (interactable)
+            {
+                PressButton();
+            }
+            else
+            {
+                // TODO: show disabled message
+                Debug.Log("Button is disabled!");
+            }
         }
     }
 
@@ -74,10 +118,10 @@ public class ButtonPhysical : MonoBehaviour
         // Start fresh animation
         Sequence buttonSequence = DOTween.Sequence();
         
-        buttonSequence.Append(buttonBodyRenderer.transform.DOLocalMoveY(-pushDistance, animationDuration));
+        buttonSequence.Append(buttonBodyRenderer.transform.DOLocalMoveY(pressedLocalY, animationDuration));
         buttonSequence.Join(buttonBodyRenderer.material.DOColor(pressedColor, animationDuration));
         
-        buttonSequence.Append(buttonBodyRenderer.transform.DOLocalMoveY(0, animationDuration));
+        buttonSequence.Append(buttonBodyRenderer.transform.DOLocalMoveY(normalLocalY, animationDuration));
         buttonSequence.Join(buttonBodyRenderer.material.DOColor(normalColor, animationDuration));
         
         buttonSequence.OnComplete(() => isAnimating = false);

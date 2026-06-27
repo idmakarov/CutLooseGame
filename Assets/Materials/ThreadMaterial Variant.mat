@@ -28,7 +28,7 @@ Material:
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 1
+  m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap:
     RenderType: Opaque
@@ -40,7 +40,7 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _Cull: 0
+    - _Cull: 2
     m_Colors:
     - _BaseColor: {r: 0.066037714, g: 0.061415475, b: 0.061365236, a: 1}
     - _Color: {r: 0.066037714, g: 0.061415475, b: 0.061365236, a: 1}

@@ -7,6 +7,9 @@ public class DummyWithLamp : MonoBehaviour
     [SerializeField] List<GameObject> enableOnFalling;
     [SerializeField] List<GameObject> disableOnFalling;
 
+    [SerializeField] Renderer lampRenderer;
+    [SerializeField] Material disabledMaterial;
+
     [SerializeField] private string boxTag;
     [SerializeField] private string playerTag;
     [SerializeField] private Rigidbody dummyRb;
@@ -63,5 +66,7 @@ public class DummyWithLamp : MonoBehaviour
 
         foreach (GameObject go in disableOnFalling)
             go.SetActive(false);
+
+        lampRenderer.material = disabledMaterial;
     }
 }

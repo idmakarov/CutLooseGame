@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class CableController : MonoBehaviour
 {
     [SerializeField] private PlayerInput _playerInput;
-    private InputAction _extendAction, _retractAction, _connectAction;
+    private InputAction _extendAction, _retractAction, _connectAction, _resetAction;
     [SerializeField] int minSegmentCount, maxSegmentCount;
 
     [SerializeField] PhysicCable physicCable;
@@ -29,6 +29,7 @@ public class CableController : MonoBehaviour
         _extendAction = _playerInput.actions.FindAction("CableExtend");
         _retractAction = _playerInput.actions.FindAction("CableRetract");
         _connectAction = _playerInput.actions.FindAction("CableConnect");
+        _resetAction = _playerInput.actions.FindAction("CableReset");
 
         forcedConnectMain.ForceConnectCables();
     }
@@ -66,6 +67,11 @@ public class CableController : MonoBehaviour
                 forcedConnectOptional.ForceConnectCables();
                 cableConnected = true;
             }
+        }
+
+        if (_resetAction.WasPressedThisFrame())
+        {
+            physicCable.ResetPointsPosition();
         }
     }
 }

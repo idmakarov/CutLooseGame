@@ -272,6 +272,15 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CableReset"",
+                    ""type"": ""Button"",
+                    ""id"": ""23a2afda-e5e7-45eb-b50f-0a0197a94231"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -329,6 +338,17 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""action"": ""CableConnect"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a3593008-5a00-4829-a477-8f9466eb0563"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CableReset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -346,6 +366,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         m_Gameplay_CableExtend = m_Gameplay.FindAction("CableExtend", throwIfNotFound: true);
         m_Gameplay_CableRetract = m_Gameplay.FindAction("CableRetract", throwIfNotFound: true);
         m_Gameplay_CableConnect = m_Gameplay.FindAction("CableConnect", throwIfNotFound: true);
+        m_Gameplay_CableReset = m_Gameplay.FindAction("CableReset", throwIfNotFound: true);
     }
 
     ~@InputManager()
@@ -539,6 +560,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_CableExtend;
     private readonly InputAction m_Gameplay_CableRetract;
     private readonly InputAction m_Gameplay_CableConnect;
+    private readonly InputAction m_Gameplay_CableReset;
     /// <summary>
     /// Provides access to input actions defined in input action map "Gameplay".
     /// </summary>
@@ -570,6 +592,10 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Gameplay/CableConnect".
         /// </summary>
         public InputAction @CableConnect => m_Wrapper.m_Gameplay_CableConnect;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/CableReset".
+        /// </summary>
+        public InputAction @CableReset => m_Wrapper.m_Gameplay_CableReset;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -611,6 +637,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @CableConnect.started += instance.OnCableConnect;
             @CableConnect.performed += instance.OnCableConnect;
             @CableConnect.canceled += instance.OnCableConnect;
+            @CableReset.started += instance.OnCableReset;
+            @CableReset.performed += instance.OnCableReset;
+            @CableReset.canceled += instance.OnCableReset;
         }
 
         /// <summary>
@@ -637,6 +666,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @CableConnect.started -= instance.OnCableConnect;
             @CableConnect.performed -= instance.OnCableConnect;
             @CableConnect.canceled -= instance.OnCableConnect;
+            @CableReset.started -= instance.OnCableReset;
+            @CableReset.performed -= instance.OnCableReset;
+            @CableReset.canceled -= instance.OnCableReset;
         }
 
         /// <summary>
@@ -734,5 +766,12 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnCableConnect(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "CableReset" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnCableReset(InputAction.CallbackContext context);
     }
 }
