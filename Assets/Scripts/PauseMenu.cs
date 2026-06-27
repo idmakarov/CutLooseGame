@@ -4,7 +4,7 @@ public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject _pauseMenu;
     [SerializeField] private PlayerInput _playerInput;
-    private InputAction _gameplayAction;
+    private InputAction pauseAction;
     private bool _isPaused = false;
     
     private void Awake()
@@ -15,12 +15,12 @@ public class PauseMenu : MonoBehaviour
 
     private void Start()
     {
-        _gameplayAction = _playerInput.actions.FindAction("Pause");
+        pauseAction = _playerInput.actions.FindAction("Pause");
     }
 
     private void Update()
     {
-        if(_gameplayAction.WasPressedThisFrame())
+        if(pauseAction.WasPressedThisFrame())
         {
             if (!_isPaused)
             {
